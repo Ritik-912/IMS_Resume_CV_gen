@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+    <style>
+        @page {
+            margin: 1cm;
+        }
+
+        @font-face {
+            font-family: 'Calibri';
+            src: url('file://{{ calibri_path }}') format('truetype');
+        }
+
+        body {
+            font-family: Calibri, sans-serif;
+            font-size: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3px 0;
+        }
+
+        .logo {
+            width: 1.93cm;
+            height: 2.79cm;
+        }
+
+        .photo {
+            width: 1.93cm;
+            height: 1.64cm;
+            object-fit: cover;
+        }
+
+        .header-middle {
+            text-align: center;
+            flex: 1;
+        }
+
+        .name {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .contact {
+            font-size: 13px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid black;
+            margin: 5px 0 10px 0;
+        }
+
+        .section-title {
+            background-color: #a6a6a6;
+            font-weight: bold;
+            padding: 2px 5px;
+            margin-top: 10px;
+        }
+
+        .columns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .left-column {
+            flex: 3;
+        }
+
+        .right-column {
+            border-style:solid;
+            border-width: 1px;
+            border-color: black;
+            padding: 2px;
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 4px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <img class="logo" src="((( ims_logo_path )))" alt="IMS Logo">
+        <div class="header-middle">
+            <div class="name">((( name )))</div>
+            <div class="contact">((( phone ))) | ((( email )))</div>
+            ((% if linkedin %))
+                <div class="contact">((( linkedin )))</div>
+            ((% endif %))
+        </div>
+        <img class="photo" src="((( photo )))" alt="Photo">
+    </div>
+
+    <hr>
+
+    <!-- Career Objective -->
+    ((% if objective %))
+    <div class="section-title">Career Objective</div>
+    <p>((( objective )))</p>
+    ((% endif %))
+
+    <!-- Academic Record -->
+    <div class="section-title">Academic Record</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Particulars</th>
+                <th>Institution/Authority</th>
+                <th>Year of Passing</th>
+                <th>Performance</th>
+            </tr>
+        </thead>
+        <tbody>
+            ((% for academic in academics %))
+            <tr>
+                <td>((( academic.course )))</td>
+                <td>((( academic.institute )))</td>
+                <td>((( academic.pass_year )))</td>
+                <td>((( academic.grade )))</td>
+            </tr>
+            ((% endfor %))
+        </tbody>
+    </table>
+
+    <div class="columns">
+
+        <!-- LEFT COLUMN -->
+        <div class="left-column">
+
+            <!-- Work Experience -->
+            ((% if experience %))
+            <div class="section-title">Work Experience</div>
+            ((% for exp in experience %))
+            <table>
+                <tr>
+                    <td>Organization</td>
+                    <td>((( exp.organisation )))</td>
+                </tr>
+                <tr>
+                    <td>Project</td>
+                    <td>((( exp.project )))</td>
+                </tr>
+                <tr>
+                    <td>Responsibilities</td>
+                    <td>
+                        ((% for resp in exp.responsibilities %))
+                        <p style="margin: 2px 1px;">((( resp )))</p>
+                        ((% endfor %))
+                    </td>
+                </tr>
+                <tr>
+                    <td>Designation</td>
+                    <td>((( exp.designation )))</td>
+                </tr>
+                <tr>
+                    <td>Duration</td>
+                    <td>((( exp.startDate ))) to ((( exp.endDate )))</td>
+                </tr>
+            </table>
+            ((% endfor %))
+            ((% endif %))
+
+            <!-- Summer Training -->
+            ((% if trainings %))
+            <div class="section-title">Summer Training</div>
+            ((% for training in trainings %))
+            <table>
+                <tr>
+                    <td>Organization</td>
+                    <td>((( training.organisation )))</td>
+                </tr>
+                <tr>
+                    <td>Project</td>
+                    <td>((( training.project )))</td>
+                </tr>
+                <tr>
+                    <td>Key<br>Learnings</td>
+                    <td>
+                        ((% for learning in training.learnings %))
+                        <p style="margin: 3px 1px;">((( learning )))</p>
+                        ((% endfor %))
+                    </td>
+                </tr>
+                <tr>
+                    <td>Duration</td>
+                    <td>((( training.duration )))</td>
+                </tr>
+            </table>
+            ((% endfor %))
+            ((% endif %))
+
+            <!-- Projects Undertaken -->
+            ((% if projects %))
+            <div class="section-title">Projects Undertaken</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ((% for project in projects %))
+                    <tr>
+                        <td>((( project.title )))</td>
+                        <td>((( project.description )))</td>
+                    </tr>
+                    ((% endfor %))
+                </tbody>
+            </table>
+            ((% endif %))
+
+            <!-- Certifications -->
+            ((% if certifications %))
+            <div class="section-title">Certifications</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Certification Name</th>
+                        <th>Issued By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ((% for cert in certifications %))
+                    <tr>
+                        <td>((( cert.title )))</td>
+                        <td>((( cert.issuer )))</td>
+                    </tr>
+                    ((% endfor %))
+                </tbody>
+            </table>
+            ((% endif %))
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-column">
+
+            <!-- Additional Proficiencies -->
+            ((% if proficiencies %))
+            <div class="section-title">Additional Proficiencies</div>
+            <ul>
+                ((% for item in proficiencies %))
+                <li>((( item )))</li>
+                ((% endfor %))
+            </ul>
+            ((% endif %))
+
+            <!-- Achievements & Co-Curricular -->
+            ((% if coCurricular %))
+            <div class="section-title">Achievements & Co-Curricular</div>
+            <ul>
+                ((% for activity in coCurricular %))
+                <li>((( activity )))</li>
+                ((% endfor %))
+            </ul>
+            ((% endif %))
+
+            <!-- Personal Profile -->
+            <div class="section-title">Personal Profile</div>
+            <ul>
+                <li><span style="text-decoration: underline;">Strengths:</span>((( strengths )))</li>
+                <li><span style="text-decoration: underline;">Hobbies:</span>((( hobbies )))</li>
+                <li><span style="text-decoration: underline;">D.O.B.:</span>((( dob )))</li>
+                <li><span style="text-decoration: underline;">Languages known:</span>((( languages )))</li>
+               ((% if address %))<li><span style="text-decoration: underline;">Permanent Address:</span>((( address)))</li>((% endif %))
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- Declaration -->
+    <div class="section-title">Declaration</div>
+    <p>I hereby declare that all the information given by me is true to the best of my knowledge.</p>
+
+</body>
+</html>
