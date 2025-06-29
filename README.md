@@ -172,5 +172,3 @@ Ideas? Bugs? Open an **Issue** or **Pull Request** — contributions welcome!
 ---
 
 **Happy resume building! 🚀**
-
-```
